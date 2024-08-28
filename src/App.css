@@ -1,0 +1,274 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+}
+
+header {
+  background-color: #343a40;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+
+form {
+  background-color: #fff;
+  opacity: 0.7;
+  padding: 5rem;
+  margin: 2rem auto;
+  max-width: 600px;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+}
+
+input {
+  display: block;
+  width: calc(100% - 2rem);
+  margin: 0.5rem 1rem;
+  padding: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+button {
+  display: block;
+  width: calc(100% - 2rem);
+  margin: 0.5rem 1rem;
+  padding: 0.5rem;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+h2 {
+  text-align: center;
+  color: #343a40;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url('./imgs/background.png'); 
+  background-size: cover;
+  background-position: center;
+
+}
+
+.home-container {
+  background-color: #2F5651;
+  color: white; 
+  text-align: center;
+}
+.home-container img {
+  width: 350px;
+}
+
+.home-container h1 {
+  font-size: 4.5rem;
+  font-weight: 800;
+}
+
+.button-group {
+  display: flex;
+  margin-top: 1.5rem;
+}
+
+.home-button {
+  /* margin: 0.5rem; */
+  padding: 15px 50px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.home-button:hover {
+  background-color: #0056b3;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.form-group label {
+  flex: 0 0 60px;
+  margin-right: 1rem;
+  text-align: left;
+}
+
+.form-group input {
+  flex: 1; /* Flexible width for inputs */
+  padding: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+.form-group input[type="file"] {
+  flex: 1;
+}
+
+.password-input {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+/* .password-input input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem 0 0 0.25rem;
+} */
+
+/* .password-toggle-icon {
+  padding: 0.5rem;
+  border: 1px solid #ced4da;
+  border-left: none;
+  border-radius: 0 0.25rem 0.25rem 0;
+  cursor: pointer;
+} */
+
+.password-toggle-icon img {
+  width: 20px;
+  height: 20px;
+}
+
+
+.password-input {
+  display: flex;
+  align-items: center;
+}
+
+.password-toggle-icon {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.errors {
+  color: red;
+  font-size: 0.875rem;
+}
+
+.login {
+  margin-right: 2rem;
+}
+
+/* button {
+  display: block;
+  margin: 1rem auto;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: #0056b3;
+} */
+
+.ex {
+  display: flex;
+  justify-content: space-around;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.voting-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.categories {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px 0;
+}
+
+.category {
+  flex: 1;
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.label-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.label-container input[type="radio"] {
+  display: none;
+}
+
+.label-container input[type="radio"]:checked + label {
+  background-color: #d3d3d3; /* Change to your preferred highlight color */
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.label-container label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.label-container img {
+  margin-right: 10px;
+  width: 50px;
+  height: 50px;
+}
+
+button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.voting {
+    padding: 4rem;
+    margin: 1.2rem auto;
+    max-width: 750px;
+}
+
+footer {
+  text-align: center;
+}
