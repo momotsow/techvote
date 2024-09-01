@@ -55,11 +55,12 @@ const CandidateModal = ({ onClose }) => {
             value={candidateName}
             onChange={(e) => setCandidateName(e.target.value)}
             placeholder="Enter Candidate Name"
+            className="addCandidate"
           />
         </div>
         <div className="form-group">
           <label htmlFor="candidateLogo">Candidate Logo</label>
-          <input type="file" id="candidateLogo" onChange={handleLogoChange} />
+          <input type="file" id="candidateLogo" onChange={handleLogoChange} className="addCandidate"/>
         </div>
         <div className="form-group">
           <label>Placement</label>

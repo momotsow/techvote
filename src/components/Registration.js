@@ -24,6 +24,18 @@ function Registration() {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
+  const provinces = [
+    'Gauteng',
+    'Western Cape',
+    'KwaZulu-Natal',
+    'Eastern Cape',
+    'Free State',
+    'Limpopo',
+    'Mpumalanga',
+    'North West',
+    'Northern Cape',
+  ];
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'idFile') {
@@ -37,6 +49,28 @@ function Registration() {
         [name]: value,
       });
     }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.name.trim()) newErrors.name = 'Name is required.';
+    if (!formData.surname.trim()) newErrors.surname = 'Surname is required.';
+    if (!/^\d{13}$/.test(formData.idNumber)) newErrors.idNumber = 'ID Number must be 13 digits.';
+    if (!formData.address.trim()) newErrors.address = 'Address is required.';
+    if (!formData.city.trim()) newErrors.city = 'City is required.';
+    if (!/^\d{4}$/.test(formData.postalCode)) newErrors.postalCode = 'Postal Code must be 4 digits.';
+    if (!formData.province) newErrors.province = 'Province is required.';
+    if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Email is invalid.';
+
+    const passwordErrors = validatePassword(formData.password);
+    if (Object.keys(passwordErrors).length > 0) newErrors.password = passwordErrors;
+
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = 'Passwords do not match.';
+    }
+
+    return newErrors;
   };
 
   const validatePassword = (password) => {
@@ -62,14 +96,9 @@ function Registration() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newErrors = validatePassword(formData.password);
+    const newErrors = validateForm();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      return;
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      setErrors({ confirmPassword: 'Passwords do not match.' });
       return;
     }
 
@@ -87,7 +116,7 @@ function Registration() {
     };
 
     try {
-      const response = await fetch('/techvotesa/public/registration.php', { // Use relative URL
+      const response = await fetch('/techvotesa/public/registration.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -121,6 +150,7 @@ function Registration() {
             onChange={handleChange}
             required
           />
+          {errors.name && <p className="error">{errors.name}</p>}
         </div>
         <div className="form-group">
           <label htmlFor="surname">Surname:</label>
@@ -132,6 +162,7 @@ function Registration() {
             onChange={handleChange}
             required
           />
+          {errors.surname && <p className="error">{errors.surname}</p>}
         </div>
         <div className="form-group">
           <label htmlFor="idNumber">ID Number:</label>
@@ -143,6 +174,7 @@ function Registration() {
             onChange={handleChange}
             required
           />
+          {errors.idNumber && <p className="error">{errors.idNumber}</p>}
         </div>
         <div className="form-group">
           <label htmlFor="address">Address:</label>
@@ -154,6 +186,7 @@ function Registration() {
             onChange={handleChange}
             required
           />
+          {errors.address && <p className="error">{errors.address}</p>}
         </div>
         <div className="form-group">
           <label htmlFor="city">City:</label>
@@ -165,6 +198,7 @@ function Registration() {
             onChange={handleChange}
             required
           />
+          {errors.city && <p className="error">{errors.city}</p>}
         </div>
         <div className="form-group">
           <label htmlFor="postalCode">Postal Code:</label>
@@ -176,17 +210,25 @@ function Registration() {
             onChange={handleChange}
             required
           />
+          {errors.postalCode && <p className="error">{errors.postalCode}</p>}
         </div>
         <div className="form-group">
           <label htmlFor="province">Province:</label>
-          <input
-            type="text"
+          <select
             id="province"
             name="province"
             value={formData.province}
             onChange={handleChange}
             required
-          />
+          >
+            <option value="">Select your province</option>
+            {provinces.map((province) => (
+              <option key={province} value={province}>
+                {province}
+              </option>
+            ))}
+          </select>
+          {errors.province && <p className="error">{errors.province}</p>}
         </div>
         <div className="form-group">
           <label htmlFor="email">Email:</label>
@@ -198,6 +240,7 @@ function Registration() {
             onChange={handleChange}
             required
           />
+          {errors.email && <p className="error">{errors.email}</p>}
         </div>
         <div className="form-group">
           <label htmlFor="password">Password:</label>
@@ -217,7 +260,13 @@ function Registration() {
               <img src={showPassword ? eyeSlashIcon : eyeIcon} alt="Toggle Password Visibility" />
             </span>
           </div>
-          {errors.password && <p className="error">{errors.password}</p>}
+          {errors.password && (
+            <div className="error">
+              {Object.values(errors.password).map((error, index) => (
+                <p key={index}>{error}</p>
+              ))}
+            </div>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="confirmPassword">Confirm Password:</label>
@@ -248,6 +297,7 @@ function Registration() {
             onChange={handleChange}
             required
           />
+          {errors.idFile && <p className="error">{errors.idFile}</p>}
         </div>
         <button type="submit">Register</button>
         <p>Already have an account? <Link to="/login">Login here</Link></p>
