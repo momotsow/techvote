@@ -225,7 +225,9 @@ a:hover {
 .label-container {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  align-content: center;
+
 }
 
 .label-container input[type="radio"] {
@@ -271,4 +273,40 @@ button[type="submit"]:hover {
 
 footer {
   text-align: center;
+}
+
+/* voting */
+/* src/App.css or a dedicated VotingPage.css file */
+
+/* General styling for voting page */
+.voting-page .category {
+  margin-bottom: 20px;
+}
+
+.label-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.candidate-label {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.candidate-label img {
+  width: 30px;
+  height: 30px;
+  margin-right: 8px;
+  border-radius: 50%;
+}
+
+.not-available {
+  font-size: 16px;
+  font-weight: normal;
+  color: #999;
 }

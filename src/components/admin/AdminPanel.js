@@ -1,16 +1,25 @@
-// src/components/AdminPanel.js
-import React from 'react';
-import AdminDashboard from './AdminDashboard';
-import CandidateManagement from './CandidateManagement';
+import React, { useState } from 'react';
+import CandidateModal from './CandidateModal';
 
-function AdminPanel() {
+const AdminPanel = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
-    <div className="admin-panel container">
-      <h2>Admin Panel</h2>
-      <AdminDashboard />
-      <CandidateManagement />
+    <div>
+      <button onClick={openModal}>Add Candidate</button>
+      {isModalOpen && (
+        <CandidateModal onClose={closeModal} />
+      )}
     </div>
   );
-}
+};
 
 export default AdminPanel;

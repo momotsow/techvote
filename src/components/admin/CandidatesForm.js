@@ -1,70 +1,43 @@
-import React, { useState } from 'react';
-import { useAdmin } from '../../context/AdminContext';
+import React, { useState, useContext } from 'react';
+import { AdminContext } from '../../context/AdminContext';
 
 function CandidateForm() {
-  const [candidateData, setCandidateData] = useState({
-    name: '',
-    logo: null, // Store the file object here
-  });
-  const { addCandidate } = useAdmin();
+  const { addCandidate } = useContext(AdminContext);
+  const [name, setName] = useState('');
+  const [logo, setLogo] = useState(null);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCandidateData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0]; // Get the first file selected
-    setCandidateData((prevData) => ({
-      ...prevData,
-      logo: file,
-    }));
+  const handleLogoChange = (e) => {
+    setLogo(e.target.files[0]);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (candidateData.name && candidateData.logo) {
-      addCandidate(candidateData);
-      setCandidateData({
-        name: '',
-        logo: null,
-      });
-    } else {
-      alert('Please provide a candidate name and logo.');
-    }
+    const newCandidate = {
+      name,
+      logo: URL.createObjectURL(logo),
+      votes: { national: 0, provincial: 0, regional: 0 },
+      totalVotes: 0,
+    };
+    addCandidate(newCandidate);
+    setName('');
+    setLogo(null);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label htmlFor="name">Candidate Name:</label>
+    <div className="candidate-form">
+      <h3>Add Candidate</h3>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
-          id="name"
-          name="name"
-          value={candidateData.name}
-          onChange={handleChange}
+          placeholder="Candidate Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           required
         />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="logo">Candidate Logo:</label>
-        <input
-          type="file"
-          id="logo"
-          name="logo"
-          accept="image/*"
-          onChange={handleFileChange}
-          required
-        />
-      </div>
-
-      <button type="submit">Add Candidate</button>
-    </form>
+        <input type="file" onChange={handleLogoChange} required />
+        <button type="submit">Add Candidate</button>
+      </form>
+    </div>
   );
 }
 

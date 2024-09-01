@@ -1,28 +1,13 @@
+// src/components/VotingPage.js
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useAdmin } from '../context/AdminContext';
 import '../App.css';
-
-const categories = {
-  provincial: [
-    { name: 'Candidate A', logo: require('../imgs/hide.png') },
-    { name: 'Candidate B', logo: require('../imgs/hide.png') },
-    { name: 'Candidate C', logo: require('../imgs/hide.png') },
-  ],
-  regional: [
-    { name: 'Candidate D', logo: require('../imgs/hide.png') },
-    { name: 'Candidate E', logo: require('../imgs/hide.png') },
-    { name: 'Candidate F', logo: require('../imgs/hide.png') },
-  ],
-  national: [
-    { name: 'Candidate G', logo: require('../imgs/hide.png') },
-    { name: 'Candidate H', logo: require('../imgs/hide.png') },
-    { name: 'Candidate I', logo: require('../imgs/hide.png') },
-  ],
-};
 
 function VotingPage() {
   const { user } = useAuth();
+  const { candidates, recordVotes } = useAdmin(); // Use candidates and recordVotes from context
   const [votes, setVotes] = useState({
     provincial: '',
     regional: '',
@@ -30,14 +15,30 @@ function VotingPage() {
   });
   const navigate = useNavigate();
 
+  const categories = {
+    provincial: [],
+    regional: [],
+    national: [],
+  };
+
+  candidates.forEach((candidate) => {
+    Object.keys(categories).forEach((category) => {
+      if (candidate.placement.includes(category.charAt(0).toUpperCase() + category.slice(1))) {
+        categories[category].push(candidate);
+      } else {
+        categories[category].push({ name: 'Not Available', logo: '', isPlaceholder: true });
+      }
+    });
+  });
+
   useEffect(() => {
-    // if (!user) {
-    //   alert('You must be logged in to vote.');
-    //   navigate('/login');
-    // } else if (localStorage.getItem('hasVoted')) {
-    //   alert('You have already voted.');
-    //   navigate('/profile');
-    // }
+    if (!user) {
+      alert('You must be logged in to vote.');
+      navigate('/login');
+    } else if (localStorage.getItem('hasVoted')) {
+      alert('You have already voted.');
+      navigate('/profile');
+    }
   }, [user, navigate]);
 
   const handleVoteChange = (category, candidate) => {
@@ -62,6 +63,9 @@ function VotingPage() {
       return;
     }
 
+    // Record votes back to the admin panel
+    recordVotes(votes);
+
     localStorage.setItem('votes', JSON.stringify(votes));
     localStorage.setItem('hasVoted', 'true');
     console.log('Votes submitted:', votes);
@@ -73,35 +77,42 @@ function VotingPage() {
   return (
     <div className="voting-page container">
       <form className="voting" onSubmit={handleSubmit}>
-      <h2>Voting Page</h2>
+        <h2>Voting Page</h2>
 
         <div className="categories">
-
           {Object.keys(categories).map((category) => (
             <div key={category} className="category">
               <h3>{category.charAt(0).toUpperCase() + category.slice(1)} Votes</h3>
-              {categories[category].map((candidate) => (
-                <div key={candidate.name} className="label-container">
+              {categories[category].map((candidate, index) => (
+                <div key={`${category}-${index}`} className="label-container">
                   <input
                     type="radio"
-                    id={`${category}-${candidate.name}`}
+                    id={`${category}-${index}`}
                     name={category}
                     value={candidate.name}
                     checked={votes[category] === candidate.name}
                     onChange={() => handleVoteChange(category, candidate.name)}
+                    disabled={candidate.isPlaceholder}
                   />
                   <label
-                    htmlFor={`${category}-${candidate.name}`}
-                    className={votes[category] === candidate.name ? 'highlight' : ''}
+                    htmlFor={`${category}-${index}`}
+                    className={`candidate-label ${candidate.isPlaceholder ? 'not-available' : ''}`}
                   >
-                    <img src={candidate.logo} alt={`${candidate.name} logo`} />
-                    {candidate.name}
+                    {candidate.isPlaceholder ? (
+                      <span>Not Available</span>
+                    ) : (
+                      <>
+                        {candidate.logo && <img src={candidate.logo} alt={`${candidate.name} logo`} />}
+                        {candidate.name}
+                      </>
+                    )}
                   </label>
                 </div>
               ))}
             </div>
           ))}
         </div>
+
         <button type="submit">Submit Votes</button>
       </form>
     </div>

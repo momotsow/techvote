@@ -11,7 +11,9 @@ import VotingPage from './components/VotingPage';
 import ThankYou from './components/ThankYou';
 import { AuthProvider } from './context/AuthContext';
 import { AdminProvider } from './context/AdminContext';
-import AdminPanel from './components/admin/AdminPanel';
+import AdminDashboard from './components/admin/AdminDashboard';
+// import AdminDashboard from './components/admin/AdminDashboard';
+
 
 import './App.css';
 
@@ -19,6 +21,8 @@ function App() {
   return (
     <Router>
       <AuthProvider>
+      <AdminProvider>
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Registration />} />
@@ -31,13 +35,13 @@ function App() {
           <Route
             path="/admin"
             element={
-              <AdminProvider>
-                <AdminPanel />
-              </AdminProvider>
+                <AdminDashboard />
             }
           />
 
         </Routes>
+                      </AdminProvider>
+
       </AuthProvider>
     </Router>
   );

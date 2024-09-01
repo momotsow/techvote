@@ -79,6 +79,7 @@ function Registration() {
       address: formData.address,
       city: formData.city,
       postalCode: formData.postalCode,
+      province: formData.province,
       email: formData.email,
       password: formData.password, // Password will be hashed in PHP
       idFile: formData.idFile,
@@ -171,6 +172,17 @@ function Registration() {
             id="postalCode"
             name="postalCode"
             value={formData.postalCode}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="province">Province:</label>
+          <input
+            type="text"
+            id="province"
+            name="province"
+            value={formData.province}
             onChange={handleChange}
             required
           />
