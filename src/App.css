@@ -3,6 +3,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f8f9fa;
+  overflow-x: hidden;
 }
 
 header {
@@ -318,9 +319,6 @@ footer {
 }
 
 /* voting */
-/* src/App.css or a dedicated VotingPage.css file */
-
-/* General styling for voting page */
 .voting-page .category {
   margin-bottom: 20px;
 }
@@ -351,4 +349,52 @@ footer {
   font-size: 16px;
   font-weight: normal;
   color: #999;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .categories {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .category {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .voting {
+    padding: 1rem;
+  }
+
+  .category {
+    padding: 15px;
+    margin: 5px 0;
+  }
+
+  .label-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .candidate-label {
+    margin-left: 0;
+    margin-top: 5px;
+    font-size: 14px;
+  }
+
+  .candidate-label img {
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+  }
+
+  button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+  }
 }

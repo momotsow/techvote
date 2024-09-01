@@ -14,25 +14,27 @@ function VotingPage() {
   });
   const navigate = useNavigate();
 
+  // Categorize candidates into provincial, regional, and national
   const categories = {
     provincial: [],
     regional: [],
     national: [],
   };
 
+  // Fill the categories with the corresponding candidates
   candidates.forEach((candidate) => {
-    Object.keys(categories).forEach((category) => {
+    const categoryKeys = Object.keys(categories);
+    categoryKeys.forEach((category) => {
       if (candidate.placement.includes(category.charAt(0).toUpperCase() + category.slice(1))) {
         categories[category].push(candidate);
-      } else {
-        categories[category].push({ name: 'Not Available', logo: '', isPlaceholder: true });
       }
     });
   });
 
+  // Handle user authentication and voting status
   useEffect(() => {
-    if (!user) { 
-      // need to re-add this before deploy
+    if (!user) {
+      // Uncomment these lines before deploying
       // alert('You must be logged in to vote.');
       // navigate('/login');
     } else if (localStorage.getItem('hasVoted')) {
@@ -41,6 +43,7 @@ function VotingPage() {
     }
   }, [user, navigate]);
 
+  // Update votes when the user selects a candidate
   const handleVoteChange = (category, candidate) => {
     setVotes((prevVotes) => ({
       ...prevVotes,
@@ -48,14 +51,9 @@ function VotingPage() {
     }));
   };
 
+  // Handle vote submission
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // if (!user) {
-    //   alert('You must be logged in to vote.');
-    //   navigate('/login');
-    //   return;
-    // }
 
     const allVoted = Object.values(votes).every((vote) => vote !== '');
     if (!allVoted) {
@@ -66,11 +64,12 @@ function VotingPage() {
     // Record votes back to the admin panel
     recordVotes(votes);
 
-    //Get data from db/backend
+    // Store votes in local storage
     localStorage.setItem('votes', JSON.stringify(votes));
     localStorage.setItem('hasVoted', 'true');
     console.log('Votes submitted:', votes);
 
+    // Generate a confirmation code
     const confirmationCode = Math.random().toString(36).substr(2, 9).toUpperCase();
     navigate('/thank-you', { state: { confirmationCode } });
   };
@@ -84,32 +83,29 @@ function VotingPage() {
           {Object.keys(categories).map((category) => (
             <div key={category} className="category">
               <h3>{category.charAt(0).toUpperCase() + category.slice(1)} Votes</h3>
-              {categories[category].map((candidate, index) => (
-                <div key={`${category}-${index}`} className="label-container">
-                  <input
-                    type="radio"
-                    id={`${category}-${index}`}
-                    name={category}
-                    value={candidate.name}
-                    checked={votes[category] === candidate.name}
-                    onChange={() => handleVoteChange(category, candidate.name)}
-                    disabled={candidate.isPlaceholder}
-                  />
-                  <label
-                    htmlFor={`${category}-${index}`}
-                    className={`candidate-label ${candidate.isPlaceholder ? 'not-available' : ''}`}
-                  >
-                    {candidate.isPlaceholder ? (
-                      <span>Not Available</span>
-                    ) : (
-                      <>
-                        {candidate.logo && <img src={candidate.logo} alt={`${candidate.name} logo`} />}
-                        {candidate.name}
-                      </>
-                    )}
-                  </label>
-                </div>
-              ))}
+              {categories[category].length > 0 ? (
+                categories[category].map((candidate, index) => (
+                  <div key={`${category}-${index}`} className="label-container">
+                    <input
+                      type="radio"
+                      id={`${category}-${index}`}
+                      name={category}
+                      value={candidate.name}
+                      checked={votes[category] === candidate.name}
+                      onChange={() => handleVoteChange(category, candidate.name)}
+                    />
+                    <label
+                      htmlFor={`${category}-${index}`}
+                      className="candidate-label"
+                    >
+                      {candidate.logo && <img src={candidate.logo} alt={`${candidate.name} logo`} />}
+                      {candidate.name}
+                    </label>
+                  </div>
+                ))
+              ) : (
+                <p>No candidates available for this category.</p>
+              )}
             </div>
           ))}
         </div>

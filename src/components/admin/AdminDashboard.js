@@ -1,12 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { AdminContext } from '../../context/AdminContext';
 import CandidateModal from './CandidateModal';
+import CandidateDetailsModal from './CandidateDetailsModal'; // Import the new modal
 import './AdminDashboard.css';
 
 function AdminDashboard() {
   const { candidates, topCandidates } = useContext(AdminContext);
   const [searchTerm, setSearchTerm] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false); // State for Add Candidate modal
+  const [selectedCandidate, setSelectedCandidate] = useState(null); // State for selected candidate
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -17,11 +19,16 @@ function AdminDashboard() {
   );
 
   const closeModal = () => {
-    setIsModalOpen(false);
+    setIsAddModalOpen(false);
+    setSelectedCandidate(null); // Clear selected candidate when any modal is closed
   };
 
-  const openModal = () => {
-    setIsModalOpen(true);
+  const openAddModal = () => {
+    setIsAddModalOpen(true);
+  };
+
+  const handleRowClick = (candidate) => {
+    setSelectedCandidate(candidate); // Set the selected candidate for details
   };
 
   return (
@@ -29,17 +36,17 @@ function AdminDashboard() {
       <h1>Admin Dashboard</h1>
 
       <div className="top-candidates">
-  {topCandidates.slice(0, 3).map((candidate, index) => (
-    <div key={index} className="top-candidate">
-      <img src={candidate.logo} alt={`${candidate.name} logo`} className="candidate-logo" />
-      <div>
-        <h2>{`${index + 1} Place Candidate`}</h2>
-        <p>{candidate.name}</p>
-        <p>{candidate.totalVotes} Votes</p>
+        {topCandidates.slice(0, 3).map((candidate, index) => (
+          <div key={index} className="top-candidate">
+            <img src={candidate.logo} alt={`${candidate.name} logo`} className="candidate-logo" />
+            <div>
+              <h2>{`${index + 1} Place Candidate`}</h2>
+              <p>{candidate.name}</p>
+              <p>{candidate.totalVotes} Votes</p>
+            </div>
+          </div>
+        ))}
       </div>
-    </div>
-  ))}
-</div>
 
       <div className="search-container">
         <input
@@ -48,7 +55,7 @@ function AdminDashboard() {
           value={searchTerm}
           onChange={handleSearchChange}
         />
-        <button onClick={openModal}>Add Candidate</button>
+        <button onClick={openAddModal}>Add Candidate</button>
       </div>
 
       <table>
@@ -68,7 +75,7 @@ function AdminDashboard() {
         </thead>
         <tbody>
           {filteredCandidates.map((candidate, index) => (
-            <tr key={index}>
+            <tr key={index} onClick={() => handleRowClick(candidate)}>
               <td>{candidate.name}</td>
               <td>{candidate.votes.gauteng}</td>
               <td>{candidate.votes.limpopo}</td>
@@ -84,7 +91,19 @@ function AdminDashboard() {
         </tbody>
       </table>
 
-      {isModalOpen && <CandidateModal onClose={closeModal} />}
+      {/* Add Candidate Modal */}
+      {isAddModalOpen && (
+        <CandidateModal onClose={closeModal}>
+          {/* Your "Add Candidate" form or content here */}
+          <h2>Add New Candidate</h2>
+          {/* Form fields go here */}
+        </CandidateModal>
+      )}
+
+      {/* Candidate Details Modal */}
+      {selectedCandidate && (
+        <CandidateDetailsModal candidate={selectedCandidate} onClose={closeModal} />
+      )}
     </div>
   );
 }
