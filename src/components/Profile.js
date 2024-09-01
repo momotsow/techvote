@@ -13,6 +13,7 @@ function Profile() {
     address: '',
     city: '',
     postalCode: '',
+    province: '',
   });
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ function Profile() {
         address: user.address,
         city: user.city,
         postalCode: user.postalCode,
+        province: user.province
       });
     }
   }, [user, navigate]);
@@ -140,6 +142,17 @@ function Profile() {
               placeholder="Postal Code"
             />
           </div>
+          <div className="form-group">
+            <label htmlFor="province">Postal Code:</label>
+            <input
+              type="text"
+              id="province"
+              name="province"
+              value={profileData.province}
+              onChange={handleChange}
+              placeholder="Province"
+            />
+          </div>
           <button type="button" onClick={handleSave}>Save</button>
           <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
         </form>
@@ -152,6 +165,7 @@ function Profile() {
           <p>Address: {profileData.address}</p>
           <p>City: {profileData.city}</p>
           <p>Postal Code: {profileData.postalCode}</p>
+          <p>Province: {profileData.province}</p>
           <button onClick={() => setIsEditing(true)}>Edit</button>
         </div>
       )}

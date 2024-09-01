@@ -1,4 +1,3 @@
-// src/components/admin/CandidateModal.js
 import React, { useState } from 'react';
 import { useAdmin } from '../../context/AdminContext';
 import './CandidateModal.css';

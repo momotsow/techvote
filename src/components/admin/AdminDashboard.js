@@ -1,4 +1,3 @@
-// src/components/admin/AdminDashboard.js
 import React, { useState, useContext } from 'react';
 import { AdminContext } from '../../context/AdminContext';
 import CandidateModal from './CandidateModal';

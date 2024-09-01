@@ -1,4 +1,3 @@
-// src/components/VotingPage.js
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +6,7 @@ import '../App.css';
 
 function VotingPage() {
   const { user } = useAuth();
-  const { candidates, recordVotes } = useAdmin(); // Use candidates and recordVotes from context
+  const { candidates, recordVotes } = useAdmin(); 
   const [votes, setVotes] = useState({
     provincial: '',
     regional: '',
@@ -32,9 +31,10 @@ function VotingPage() {
   });
 
   useEffect(() => {
-    if (!user) {
-      alert('You must be logged in to vote.');
-      navigate('/login');
+    if (!user) { 
+      // need to re-add this before deploy
+      // alert('You must be logged in to vote.');
+      // navigate('/login');
     } else if (localStorage.getItem('hasVoted')) {
       alert('You have already voted.');
       navigate('/profile');
@@ -66,6 +66,7 @@ function VotingPage() {
     // Record votes back to the admin panel
     recordVotes(votes);
 
+    //Get data from db/backend
     localStorage.setItem('votes', JSON.stringify(votes));
     localStorage.setItem('hasVoted', 'true');
     console.log('Votes submitted:', votes);

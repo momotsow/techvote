@@ -12,6 +12,7 @@ function Registration() {
     address: '',
     city: '',
     postalCode: '',
+    province: '',
     email: '',
     password: '',
     confirmPassword: '',

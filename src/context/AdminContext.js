@@ -1,4 +1,3 @@
-// src/context/AdminContext.js
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
 export const AdminContext = createContext();
@@ -8,13 +7,13 @@ export const AdminProvider = ({ children }) => {
   const [topCandidates, setTopCandidates] = useState([]);
 
   useEffect(() => {
-    // Load candidates from local storage when AdminProvider mounts
+    // Load candidates from local storage when AdminProvider mounts | Load from Backend
     const storedCandidates = JSON.parse(localStorage.getItem('candidates')) || [];
     setCandidates(storedCandidates);
   }, []);
 
   useEffect(() => {
-    // Save candidates to local storage whenever they change
+    // Save candidates to local storage. | Add php backend here
     localStorage.setItem('candidates', JSON.stringify(candidates));
   }, [candidates]);
 
