@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useAdmin } from '../context/AdminContext';
+import Sidebar from './Sidebar';
 import '../App.css';
 
 function VotingPage() {
@@ -76,7 +77,9 @@ function VotingPage() {
   };
 
   return (
-    <div className="voting-page container">
+    <div className="voting-page container inside">
+    <Sidebar />
+
       <form className="voting" onSubmit={handleSubmit}>
         <h2>Voting Page</h2>
 

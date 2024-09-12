@@ -352,3 +352,8 @@ footer {
   font-weight: normal;
   color: #999;
 }
+
+.inside {
+  display: flex;
+  flex-direction: row;
+}

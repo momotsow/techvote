@@ -103,6 +103,7 @@ function Registration() {
     }
 
     const registrationData = {
+      voterID: '', 
       name: formData.name,
       surname: formData.surname,
       idNumber: formData.idNumber,
@@ -127,6 +128,7 @@ function Registration() {
       const data = await response.json();
 
       if (data.message === 'Registration successful') {
+        console.log(registrationData);
         navigate('/profile');
       } else {
         setErrors({ server: data.message });

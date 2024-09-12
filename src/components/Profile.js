@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import Sidebar from './Sidebar';
+import './Sidebar.css';
 
 function Profile() {
   const { user, logout, updateProfile } = useAuth();
   const [profileData, setProfileData] = useState({
-    id: '',
+    Voter_ID: '', // This will hold the Voter_ID
     name: '',
     surname: '',
     email: '',
@@ -24,7 +26,7 @@ function Profile() {
     } else {
       console.log('User data:', user); // Debug user data
       setProfileData({
-        id: user.id,
+        Voter_ID: user.Voter_ID, // Assuming `user.id` corresponds to the Voter_ID
         name: user.name,
         surname: user.surname,
         email: user.email,
@@ -32,7 +34,7 @@ function Profile() {
         address: user.address,
         city: user.city,
         postalCode: user.postalCode,
-        province: user.province
+        province: user.province,
       });
     }
   }, [user, navigate]);
@@ -61,7 +63,10 @@ function Profile() {
   };
 
   return (
-    <div className="container">
+    
+    <div className="container inside">
+    <Sidebar />
+    <div className="main-content">
       <h2>Profile</h2>
       {isEditing ? (
         <form>
@@ -143,21 +148,28 @@ function Profile() {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="province">Postal Code:</label>
-            <input
-              type="text"
+            <label htmlFor="province">Province:</label>
+            <select
               id="province"
               name="province"
               value={profileData.province}
               onChange={handleChange}
-              placeholder="Province"
-            />
+              required
+            >
+              <option value="">Select your province</option>
+              {['Gauteng', 'Western Cape', 'KwaZulu-Natal', 'Eastern Cape', 'Free State', 'Limpopo', 'Mpumalanga', 'North West', 'Northern Cape'].map((province) => (
+                <option key={province} value={province}>
+                  {province}
+                </option>
+              ))}
+            </select>
           </div>
           <button type="button" onClick={handleSave}>Save</button>
           <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
         </form>
       ) : (
         <div>
+          <p>Voter ID: {profileData.Voter_ID}</p> {/* Display the Voter_ID */}
           <p>Name: {profileData.name}</p>
           <p>Surname: {profileData.surname}</p>
           <p>Email: {profileData.email}</p>
@@ -170,6 +182,8 @@ function Profile() {
         </div>
       )}
       <button onClick={handleLogout}>Logout</button>
+      <p><Link to="/voting">Vote</Link></p>
+      </div>
     </div>
   );
 }

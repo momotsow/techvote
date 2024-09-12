@@ -1,9 +1,9 @@
 <?php
 // Fetch database configuration from environment variables
-$servername = getenv('DB_SERVERNAME');
-$username = getenv('DB_USERNAME');
-$password = getenv('DB_PASSWORD');
-$dbname = getenv('DB_NAME');
+$servername = "190.92.159.105";
+$username = "techvote_elecvoad";
+$password = "^*&(V%&^*bvhieuiw3hfi3y83";
+$dbname = "techvote_elecvo";
 
 // Create a connection
 $conn = new mysqli($servername, $username, $password, $dbname);

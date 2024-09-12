@@ -18,6 +18,7 @@ function Home() {
           <button className="home-button">Login</button>
         </Link>
       </div>
+      <Link to="/AdminLogin">Admin Login</Link>
     </div>
   );
 }

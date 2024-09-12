@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const response = await fetch(`${backendUrl}/register.php`, {
+      const response = await fetch(`${backendUrl}/registration.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

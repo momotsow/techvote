@@ -23,7 +23,7 @@ if (!isset($data->email) || !isset($data->password)) {
 $email = $data->email;
 $password = $data->password;
 
-$stmt = $conn->prepare("SELECT Voter_Password, Voter_Name, Voter_Surname, SA_ID, Address, City, PostalCode FROM Voter WHERE Voter_Email = ?");
+$stmt = $conn->prepare("SELECT Voter_ID, Voter_Password, Voter_Name, Voter_Surname, SA_ID, Address, City, PostalCode, Province FROM Voter WHERE Voter_Email = ?");
 if ($stmt === false) {
     echo json_encode(["success" => false, "message" => "Failed to prepare statement: " . $conn->error]);
     exit(0);
@@ -31,7 +31,7 @@ if ($stmt === false) {
 
 $stmt->bind_param("s", $email);
 $stmt->execute();
-$stmt->bind_result($hashedPassword, $name, $surname, $idNumber, $address, $city, $postalCode);
+$stmt->bind_result($id, $hashedPassword, $name, $surname, $idNumber, $address, $city, $postalCode, $province);
 $stmt->fetch();
 $stmt->close();
 
@@ -45,7 +45,9 @@ if ($hashedPassword && password_verify($password, $hashedPassword)) {
             "idNumber" => $idNumber,
             "address" => $address,
             "city" => $city,
-            "postalCode" => $postalCode
+            "postalCode" => $postalCode,
+            "province" => $province,
+            "Voter_ID" => $id
         ]
     ]);
 } else {

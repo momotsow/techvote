@@ -25,7 +25,7 @@ $response = [];
 // Check the request method to determine what action to take
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // Handle GET request: Fetch user data
-    $query = "SELECT Voter_Name AS name, Voter_Surname AS surname, Voter_Email AS email, SA_ID AS idNumber, Address AS address, City AS city, PostalCode AS postalCode FROM Voter WHERE id = ?";
+    $query = "SELECT Voter_Name AS name, Voter_Surname AS surname, Voter_Email AS email, SA_ID AS idNumber, Address AS address, City AS city, PostalCode AS postalCode, Province AS province FROM Voter WHERE id = ?";
     $stmt = $conn->prepare($query);
     if ($stmt === false) {
         echo json_encode(["error" => "Failed to prepare statement: " . $conn->error]);

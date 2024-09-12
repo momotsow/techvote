@@ -12,6 +12,7 @@ import ThankYou from './components/ThankYou';
 import { AuthProvider } from './context/AuthContext';
 import { AdminProvider } from './context/AdminContext';
 import AdminDashboard from './components/admin/AdminDashboard';
+import AdminLogin from './components/AdminLogin';
 // import AdminDashboard from './components/admin/AdminDashboard';
 
 
@@ -31,6 +32,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/voting" element={<VotingPage />} />
           <Route path="/thank-you" element={<ThankYou />} />
+          <Route path="/admin-login" element={<AdminLogin /> } />
           {/* Wrap the admin routes with AdminProvider */}
           <Route
             path="/admin"

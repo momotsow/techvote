@@ -18,11 +18,12 @@ if (!$data) {
     exit(0);
 }
 
-$id = $data->id; // Ensure id is included in the incoming data
+$id = $data->Voter_ID; // Ensure id is included in the incoming data
 $name = $data->name;
 $surname = $data->surname;
 $idNumber = $data->idNumber;
 $address = $data->address;
+$province = $data->province;
 $city = $data->city;
 $postalCode = $data->postalCode;
 $email = $data->email;
@@ -37,9 +38,9 @@ if ($stmt === false) {
 }
 
 // Debugging: Check SQL statement
-file_put_contents('php://stderr', "SQL Statement: UPDATE Voter SET Voter_Name = '$name', Voter_Surname = '$surname', SA_ID = '$idNumber', Address = '$address', City = '$city', PostalCode = '$postalCode', Voter_Email = '$email' WHERE Voter_ID = '$id'\n");
+file_put_contents('php://stderr', "SQL Statement: UPDATE Voter SET Voter_Name = '$name', Voter_Surname = '$surname', SA_ID = '$idNumber', Address = '$address', Province = '$province', City = '$city', PostalCode = '$postalCode', Voter_Email = '$email' WHERE Voter_ID = '$id'\n");
 
-$stmt->bind_param("sssssssi", $name, $surname, $idNumber, $address, $city, $postalCode, $email, $id);
+$stmt->bind_param("ssssssss", $name, $surname, $idNumber, $address, $province, $city, $postalCode, $email);
 
 if ($stmt->execute()) {
     echo json_encode(["user" => $data, "message" => "Profile updated successfully"]);

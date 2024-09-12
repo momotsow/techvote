@@ -1,0 +1,91 @@
+/* Sidebar.css */
+.sidebar {
+    width: 200px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+    position: fixed;
+    left: 0; /* Always open on desktop */
+    top: 0;
+    height: 100%;
+    transition: left 0.3s ease; /* Smooth transition for mobile */
+    z-index: 1000;
+  }
+  
+  .sidebar.open {
+    left: 0; /* Sidebar stays open */
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    margin: 4em 0;
+  }
+  
+  .sidebar ul li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    font-size: 1.2em;
+  }
+  
+  /* .sidebar ul li a:hover {
+    color: #007bff;
+  } */
+  
+  .sidebar ul li a img.sidebar-icon {
+    width: 50px;
+    height: 50px;
+    margin-right: 8px;
+  }
+  
+  /* Menu button for mobile */
+  .menu-btn {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1100;
+  }
+  
+  .menu-btn img {
+    width: 30px;
+    height: 30px;
+  }
+  
+  /* Close button inside the sidebar */
+  .close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .close-btn img {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Media query for smaller screens */
+  @media (max-width: 768px) {
+    .menu-btn {
+      display: block; /* Show menu button on smaller screens */
+    }
+  
+    .sidebar {
+      left: -250px; /* Hide sidebar by default on smaller screens */
+    }
+  
+    .sidebar.open {
+      left: 0; /* Sidebar slides in when open on mobile */
+    }
+  }
+  
